@@ -24,141 +24,240 @@
       rel="stylesheet"
     />
   </head>
-  <style>
-    .bg-conic-wrapper {
-      position: relative;
-      width: 24rem; /* 96 units or 24rem */
-      height: 24rem; /* 96 units or 24rem */
-      border-radius: 50%; /* Making it circular */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Rotating background */
-    .bg-conic {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.2;
-      background-image: conic-gradient(
-        from 45deg,
-        #3ba420a1,
-        #1a2f69a1,
-        #60739b,
-        #491841,
-        #b2b8b2,
-        #32b811a1
-      );
-      border-radius: 50%;
-      animation: rotate-gradient 5s linear infinite; /* Smooth 360° rotation of the background */
-    }
+        body {
+            background: linear-gradient(to top left, #252f3d, #111c2f, #0d1438);
+            min-height: 100vh;
+            color: #fff;
+        }
 
-    /* Image stays fixed */
-    .bg-conic-wrapper img {
-      position: relative;
-      z-index: 1; /* Keeps the image on top of the rotating background */
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover; /* Ensures the image fits well within the circle */
-      opacity: 0.85; /* Optional: to make the image slightly transparent */
-    }
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to right, 
+                rgba(26, 32, 44, 0.95), 
+                rgba(26, 41, 68, 0.95), 
+                rgba(32, 43, 101, 0.95));
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
 
-    /* Animation for rotating the conic gradient */
-    @keyframes rotate-gradient {
-      0% {
-        transform: rotate(0deg); /* Start at 0deg */
-      }
-      100% {
-        transform: rotate(360deg); /* End at 360deg */
-      }
-    }
-  </style>
-  <body
-    class="bg-gradient-to-tl from-[#252f3d] via-[#111c2f] to-[#0d1438] justify-center items-center min-h-screen bg-fixed text-black"
-  >
-    <header
-      class="fixed top-0 w-full h-20 bg-gradient- tl from-[#1a202c] via-[#1a2944] to-[#202b65] bg-transparent flex items-center justify-between text-white backdrop-blur-lg bg-opacity-10 dark:bg-gradient-to-r dark:from-gray-100 dark:via-gray-200 dark:to-gray-300 dark:text-black z-50"
-    >
-      <div class="flex items-center justify-between px-[80px] w-full">
-        <!-- Logo Section -->
-        <div class="left">
-          <h1
-            class="text-3xl font-Oswald font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#F2F9FF] via-[#CB9DF0] to-[#D9EAFD] dark:bg-gradient-to-r dark:from-gray-700 dark:via-gray-900 dark:to-black"
-          >
-            Rashid Mirdha
-          </h1>
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #F2F9FF, #CB9DF0, #D9EAFD);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #ff69b4, #9370db);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-link:hover {
+            color: #CB9DF0;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-img {
+            height: 2.5rem;
+            width:  2.5rem;
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(203, 157, 240, 0.3);
+            border-radius: 100%;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            color: #CB9DF0;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding-top: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 2rem;
+        }
+
+        .hero-text {
+            flex: 1;
+            padding-right: 4rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(26, 32, 44, 0.98);
+                padding: 1rem;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+            }
+
+            .mobile-menu.active {
+                transform: translateY(0);
+            }
+
+            .mobile-menu .nav-link {
+                display: block;
+                padding: 1rem;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .hero-text {
+                padding-right: 0;
+                padding-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <h1 class="logo">Rashid Mirdha</h1>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a class="nav-link">Home</a></li>
+                    <li><a class="nav-link">About</a></li>
+                    <li><a class="nav-link">Skills</a></li>
+                    <li><a class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="right-section">
+                <img src="Rashid.jpg" alt="Rashid Mirdha logo" class="logo-img">
+                <button class="menu-btn" aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
         </div>
-        <div class="mid text-2xl hidden md:flex">
-          <ul class="flex space-x-6 text-2xl">
-            <li>
-              <button
-                id="home-btn"
-                class="glow-button relative text-white px-3 py-1 font-bold text-lg uppercase bg-transparent rounded-lg dark:text-black"
-                onclick="handleButtonClick(this)"
-              >
-                Home
-                <div
-                  class="underline absolute bottom-0 w-[80%] h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 scale-x-0 transition-all duration-300 ease-in-out"
-                ></div>
-              </button>
-            </li>
-            <li>
-              <button
-                id="about-btn"
-                class="glow-button relative text-white px-3 py-1 font-bold text-lg uppercase bg-transparent rounded-lg dark:text-black"
-                onclick="handleButtonClick(this)"
-              >
-                About
-                <div
-                  class="underline absolute bottom-0 w-[80%] h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 scale-x-0 transition-all duration-300 ease-in-out"
-                ></div>
-              </button>
-            </li>
-            <li>
-              <button
-                id="skills-btn"
-                class="glow-button relative text-white px-3 py-1 font-bold text-lg uppercase bg-transparent rounded-lg dark:text-black"
-                onclick="handleButtonClick(this)"
-              >
-                Skills
-                <div
-                  class="underline absolute bottom-0 w-[80%] h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 scale-x-0 transition-all duration-300 ease-in-out"
-                ></div>
-              </button>
-            </li>
-            <li>
-              <button
-                id="contact-btn"
-                class="glow-button relative text-white px-3 py-1 font-bold text-lg uppercase bg-transparent rounded-lg dark:text-black"
-                onclick="handleButtonClick(this)"
-              >
-                Contact
-                <div
-                  class="underline absolute bottom-0 w-[80%] h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 scale-x-0 transition-all duration-300 ease-in-out"
-                ></div>
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Navigation Section (hidden on small screens) -->
-
-        <!-- Theme Toggle Button -->
-        <div class="right flex text-3xl items-center gap-6">
-          <div id="theme-toggle" class="dark&light flex gap-2 cursor-pointer">
-            <img src="rm logo.png" alt="rmlogo" class="h-16 hidden lg:block" />
-          </div>
-          <!-- Hamburger Icon (Mobile view only) -->
-          <div class="bar md:hidden">
-            <i class="fa-solid fa-bars" id="menu-icon"></i>
-          </div>
-        </div>
-      </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a class="nav-link">Home</a>
+        <a class="nav-link">About</a>
+        <a class="nav-link">Skills</a>
+        <a class="nav-link">Contact</a>
+    </div>
 
     <!-- Sidebar (Mobile view only) -->
     <div
@@ -270,7 +369,7 @@
         >
           <div class="bg-conic absolute inset-0"></div>
           <img
-            class="bg-conic-wrapper p-3 z-[1] transition-transform duration-300 transform hover:scale-110 w-full h-full object-cover"
+            class="bg-conic-wrapper z-[1] transition-transform duration-300 transform hover:scale-110 w-full h-full object-cover"
             src="Rashid.jpg"
             alt="Rashid Mirdha"
           />
@@ -775,6 +874,25 @@
       }
 
       typeAndDelete();
+    </script>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Handle nav link clicks
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
     </script>
   </body>
 </html>
